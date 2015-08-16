@@ -6,7 +6,7 @@ import java.util.*;
  * Created by phirayu on 13/8/2558.
  */
 public class Main {
-    List<String> resultList = new ArrayList<String>();
+
     public static void main(String[] args){
         Scanner input = new Scanner(System.in);
         //String text = input.nextLine();
@@ -33,6 +33,8 @@ public class Main {
 
     }
 
+
+    List<String> resultList = new ArrayList<String>();
     private Double calculate(List<String> postfixs){
 
         String operation = "+-*/";
@@ -92,25 +94,15 @@ public class Main {
 
     private int infixToPostFix(String text,int count){
         String operation = "-+/*";
-        List<String> strings = new ArrayList<String>();
+        List<String> stackOperation = new ArrayList<String>();
         //System.out.println(text);
         String result = "";
-        System.out.println(text);
+        //System.out.println(text);
         Boolean character ;
         for(int j=0;j<text.length();j++){
 
-            //System.out.println(resultList.toString());
-            /*if(count>=text.length()){
-                break;
-            }else if(text.charAt(j) != text.charAt(count)){
-                System.out.println(j+ ":"+count);
-                j=count;
-            }*/
-
             char a=text.charAt(j);
-
-
-            character=true;
+          character=true;
 
 
             for(char oper:operation.toCharArray()){
@@ -120,21 +112,21 @@ public class Main {
                         resultList.add(result);
                     }
                     result="";
-                    if(strings.size()>0){
-                        while(strings.size()>0&&operation.indexOf(strings.get(strings.size()-1))>operation.indexOf(a)){
+                    if(stackOperation.size()>0){
+                        while(stackOperation.size()>0&&operation.indexOf(stackOperation.get(stackOperation.size()-1))>operation.indexOf(a)){
 
                             //result=result+strings.get(strings.size()-1);
-                            resultList.add(strings.get(strings.size()-1));
-                            strings.remove(strings.get(strings.size()-1));
+                            resultList.add(stackOperation.get(stackOperation.size()-1));
+                            stackOperation.remove(stackOperation.get(stackOperation.size()-1));
                         }
-                        strings.add(a+"");
+                        stackOperation.add(a+"");
                     }else{
-                        strings.add(a+"");
+                        stackOperation.add(a+"");
                     }
                 }
             }
             if(a == '('){
-                character=false;
+                //character=false;
                 j=infixToPostFix(text.substring(count+1),count);
                 count=j;
 
@@ -143,8 +135,8 @@ public class Main {
                 //character=false;
 
                 if(result.length()>0) {resultList.add(result);}
-                for (int i=strings.size()-1;i>=0;i--){
-                    resultList.add(strings.get(i));
+                for (int i=stackOperation.size()-1;i>=0;i--){
+                    resultList.add(stackOperation.get(i));
                 }
                 //System.out.println(text.substring(count));
                 return count+1;
@@ -159,8 +151,8 @@ public class Main {
         if(result.length()>0) {
             resultList.add(result);
         }
-        for (int i=strings.size()-1;i>=0;i--){
-            resultList.add(strings.get(i));
+        for (int i=stackOperation.size()-1;i>=0;i--){
+            resultList.add(stackOperation.get(i));
         }
         return count;
     }
