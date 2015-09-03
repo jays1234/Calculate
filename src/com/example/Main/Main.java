@@ -12,7 +12,7 @@ public class Main {
         //String text = input.nextLine();
         //String text = "1+2*4/5-7+3/6";
 
-        String text = "(((1+1)*2)*4)*3+10";
+        String text = "12*((3+5)/4)";
 
         System.out.println("input :"+text);
         Main main = new Main();
@@ -95,7 +95,7 @@ public class Main {
     private int infixToPostFix(String text,int count){
         String operation = "-+/*";
         List<String> stackOperation = new ArrayList<String>();
-        //System.out.println(text);
+        System.out.println(text);
         String result = "";
         //System.out.println(text);
         Boolean character ;
@@ -127,13 +127,11 @@ public class Main {
             }
             if(a == '('){
                 //character=false;
-                j=infixToPostFix(text.substring(count+1),count);
+                j=infixToPostFix(text.substring(j+1),count);
                 count=j;
 
 
             }else if(a == ')'){
-                //character=false;
-
                 if(result.length()>0) {resultList.add(result);}
                 for (int i=stackOperation.size()-1;i>=0;i--){
                     resultList.add(stackOperation.get(i));
